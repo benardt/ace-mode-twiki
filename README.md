@@ -5,7 +5,7 @@ Syntax highlighter for Ace editor for TML (TWiki markup language)
 
 ![TWiki logo](https://twiki.org/p/pub/TWiki04x01/TWikiLogos/T-logo-88x31-t.gif)
 ![ACE logo](https://ace.c9.io/doc/site/images/ace-tab.png)
-![Greasemonkey](https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Greasemonkey.svg/220px-Greasemonkey.svg.png){:height="50%" width="50%"}
+<img alt="Greasemonkey" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Greasemonkey.svg/220px-Greasemonkey.svg.png" width="100"  />
 
 # References
 
