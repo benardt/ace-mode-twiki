@@ -1,0 +1,51 @@
+// ==UserScript==
+// @name         Syntax highligthing editor for TWiki
+// @namespace
+// @version      0.1
+// @description  Syntax Highligthing editor for TWiki
+// @include      https://twiki.org/cgi-bin/edit*
+// @author       Thierry Bénard
+// @icon         https://www.google.com/s2/favicons?domain=greasyfork.org
+// @grant        none
+// ==/UserScript==
+
+/* eslint-env jquery */
+
+(function() {
+    'use strict';
+
+    // globals
+    const url_ace = "https://ace.c9.io/build/src/ace.js";
+    const height_init = 300;
+
+    // functions
+    function myEditor() {
+        var $newdiv1 = $( "<div id='ace_object1'></div>" );
+        $newdiv1.height(height_init);
+        $( "#topic" ).first().after( $newdiv1 );
+
+        var editor = ace.edit("ace_object1");
+        editor.setTheme("ace/theme/chrome");
+        editor.session.setMode("ace/mode/javascript");
+
+        var textarea = $('textarea[id="topic"]').hide();
+        editor.getSession().setValue(textarea.val());
+        editor.getSession().on('change', function(){
+            textarea.val(editor.getSession().getValue());
+        });
+
+    }
+
+    // Starting here...
+    $.getScript( url_ace )
+        .done(function( script, textStatus ) {
+        console.log( textStatus );
+        myEditor();
+    })
+        .fail(function( jqxhr, settings, exception ) {
+        alert( "Triggered ajaxError handler." );
+    });
+
+
+
+})();
