@@ -5,7 +5,7 @@
 // @description  Syntax Highligthing editor for TWiki
 // @include      https://twiki.org/cgi-bin/edit*
 // @author       Thierry Bénard
-// @icon         https://www.google.com/s2/favicons?domain=greasyfork.org
+// @icon         https://cdn1.iconfinder.com/data/icons/hawcons/32/699302-icon-32-clipboard-edit-512.png
 // @grant        none
 // ==/UserScript==
 
@@ -15,35 +15,74 @@
     'use strict';
 
     // globals
-    const url_ace = "https://ace.c9.io/build/src/ace.js";
+    var request_available = true; // avoid to launch new request if last one is not completed
+    const url_tml2html = "https://twiki.org/cgi-bin/rest/WysiwygPlugin/tml2html";
+    const url_ace_domain = "https://ace.c9.io/build/src/";
     const height_init = 300;
 
     // functions
+    function createDiv(id, resizeable) {
+        var $newdiv1 = $( "<div id='" + id + "'></div>" );
+        // resizeable = MASTER div
+        if (resizeable) {
+            $newdiv1.height(height_init);
+            $newdiv1.css("resize", "both");
+            $newdiv1.css("overflow", "auto");
+        } else {
+            // CHILD div side-by-side inside MASTER div
+            $newdiv1.width("50%");
+            $newdiv1.height("100%");
+            $newdiv1.css("float", "left");
+        }
+        return $newdiv1;
+    }
+
+    /*
+     * Update live ACE editor
+     *
+     */
+    function update(mytext) {
+        $.get( url_tml2html, { text: mytext } )
+            .done(function( data ) {
+            request_available = true;
+            $( "#ace_object2").html( data );
+        });
+    }
+
+    /*
+     * Main function for ACE editor
+     *
+     */
     function myEditor() {
         // create new DIV
-        var $newdiv1 = $( "<div id='ace_object1'></div>" );
-        $newdiv1.height(height_init);
-        $newdiv1.css("resize", "both");
-        $newdiv1.css("overflow", "auto");
+        var $acemaster = createDiv('ace_master', true);
+        var $acediv1 = createDiv('ace_object1', false).appendTo($acemaster);
+        var $acediv2 = createDiv('ace_object2', false).appendTo($acemaster);
 
         // add DIV afetr textarea
-        $( "#topic" ).first().after( $newdiv1 );
+        $( "#topic" ).first().after( $acemaster );
 
         // create ACE editor instance
         var editor = ace.edit("ace_object1");
         editor.setTheme("ace/theme/chrome");
-        editor.session.setMode("ace/mode/javascript");
+        editor.session.setMode("ace/mode/html");
 
         var textarea = $('textarea[id="topic"]').hide();
         editor.getSession().setValue(textarea.val());
         editor.getSession().on('change', function(){
-            textarea.val(editor.getSession().getValue());
+            var mytext = editor.getSession().getValue();
+            textarea.val(mytext);
+            if (request_available) {
+                request_available = false;
+                update(mytext);
+            }
         });
 
     }
 
     // Starting here...
-    $.getScript( url_ace )
+    console.log($().jquery);
+    $.getScript( url_ace_domain + "ace.js" )
         .done(function( script, textStatus ) {
         console.log( textStatus );
         myEditor();
