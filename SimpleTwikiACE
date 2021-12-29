@@ -20,10 +20,16 @@
 
     // functions
     function myEditor() {
+        // create new DIV
         var $newdiv1 = $( "<div id='ace_object1'></div>" );
         $newdiv1.height(height_init);
+        $newdiv1.css("resize", "both");
+        $newdiv1.css("overflow", "auto");
+
+        // add DIV afetr textarea
         $( "#topic" ).first().after( $newdiv1 );
 
+        // create ACE editor instance
         var editor = ace.edit("ace_object1");
         editor.setTheme("ace/theme/chrome");
         editor.session.setMode("ace/mode/javascript");
@@ -45,7 +51,5 @@
         .fail(function( jqxhr, settings, exception ) {
         alert( "Triggered ajaxError handler." );
     });
-
-
 
 })();
