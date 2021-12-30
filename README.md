@@ -8,6 +8,9 @@ Syntax highlighter for Ace editor for TML (TWiki markup language)
 <img alt="Greasemonkey" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Greasemonkey.svg/220px-Greasemonkey.svg.png" width="40"  />
 <img alt="Tampermonkey" src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Tampermonkey_logo.png" width="40"  />
 
+# Getting started
+
+Change the following line `// @include      https://twiki.org/cgi-bin/edit*` in the user script with the right domain name. Example: `// @include      https://my-company-domain.com/cgi-bin/edit*`.
 
 # References
 
