@@ -39,6 +39,16 @@
     }
 
     /*
+     * clean text to be compatible with TML2HTML
+     *
+     */
+    function cleanText(text) {
+        text = text.replace(/%BR%/gm,"<literal><br></literal>");
+        text = text.replace(/\n\n\n+/g,"\n\n");
+        return text;
+    }
+
+    /*
      * Update live ACE editor
      *
      */
@@ -77,7 +87,7 @@
             textarea.val(mytext);
             if (request_available) {
                 request_available = false;
-                update(mytext);
+                update(cleanText(mytext));
             }
         });
     }
