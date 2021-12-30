@@ -15,8 +15,9 @@
     'use strict';
 
     // globals
+    const url_base = window.location.origin;
     var request_available = true; // avoid to launch new request if last one is not completed
-    const url_tml2html = "https://twiki.org/cgi-bin/rest/WysiwygPlugin/tml2html";
+    const url_tml2html = url_base + "/cgi-bin/rest/WysiwygPlugin/tml2html";
     const url_ace_domain = "https://ace.c9.io/build/src/";
     const height_init = 300;
 
@@ -46,6 +47,8 @@
             .done(function( data ) {
             request_available = true;
             $( "#ace_object2").html( data );
+            // CSS
+            $(".WYSIWYG_PROTECTED").css({"color": "orange", "font-style": "italic"});
         });
     }
 
@@ -77,14 +80,14 @@
                 update(mytext);
             }
         });
-
     }
 
     // Starting here...
-    console.log($().jquery);
     $.getScript( url_ace_domain + "ace.js" )
         .done(function( script, textStatus ) {
+        console.log($().jquery);
         console.log( textStatus );
+        console.log("url base: ", url_base);
         myEditor();
     })
         .fail(function( jqxhr, settings, exception ) {
