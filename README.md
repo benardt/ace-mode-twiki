@@ -1,3 +1,5 @@
+<img src="https://api.codiga.io/project/30552/score/svg" alt="code quality score" style="width: 160px; margin-left: auto; margin-right: auto; display: block;"> <img src="https://api.codiga.io/project/30552/status/svg" alt="code quality score" style="width: 100px; margin-left: auto; margin-right: auto; display: block;">
+
 # ace-mode-twiki
 Syntax highlighter for Ace editor for TML (TWiki markup language)
 
